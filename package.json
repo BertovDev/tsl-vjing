@@ -5,17 +5,21 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "signal": "node signaling/server.mjs",
+    "dev:b2b": "concurrently -k -n SIGNAL,APP -c cyan,green \"npm run signal\" \"npm run dev\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "three": "^0.183.2"
+    "three": "^0.183.2",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@types/three": "^0.183.1",
+    "concurrently": "^9.2.1",
     "typescript": "^5.9.3",
     "vite": "^8.0.0"
   },
