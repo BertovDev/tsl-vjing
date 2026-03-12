@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #272727;
+  --comment: #f28d52;
+  --error: #ff8faa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Geist Mono", monospace;
+  background: #02040b;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #050816;
+}
+
+.stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.editor-overlay {
+  position: fixed;
+  z-index: 2;
+  top: 20px;
+  left: 22px;
+  width: min(980px, calc(100vw - 44px));
+  height: min(68vh, 820px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+#live-editor {
+  pointer-events: auto;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  resize: none;
+  background-color: transparent;
+  /* background: linear-gradient(
+    90deg,
+    rgba(5, 9, 19, 0.02) 0%,
+    rgba(5, 9, 19, 0.04) 56%,
+    rgba(5, 9, 19, 0) 100%
+  ); */
+  color: var(--ink);
+  caret-color: var(--ink);
+  font:
+    500 clamp(14px, 0.98vw, 22px) / 1.35 "Geist Mono",
+    monospace;
+  letter-spacing: 0.01em;
+  white-space: pre;
+  tab-size: 2;
+  /* text-shadow:
+    0 1px 0 rgba(1, 3, 8, 0.95),
+    0 0 14px rgba(1, 3, 8, 0.92); */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#live-editor::selection {
+  background: rgba(84, 100, 255, 0.35);
+}
+
+#live-editor::-webkit-scrollbar {
+  display: none;
+}
+
+.errors {
+  margin: 0;
+  max-height: 18vh;
+  overflow: auto;
+  color: var(--error);
+  background: transparent;
+  font:
+    500 clamp(14px, 0.85vw, 18px) / 1.4 "Geist Mono",
+    monospace;
+  /* text-shadow:
+    0 1px 0 rgba(18, 1, 8, 0.96),
+    0 0 10px rgba(18, 1, 8, 0.9); */
+  pointer-events: none;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font:
+    500 clamp(12px, 0.8vw, 16px) / 1.2 "Geist Mono",
+    monospace;
+  /* text-shadow:
+    0 1px 0 rgba(4, 6, 11, 0.95),
+    0 0 10px rgba(4, 6, 11, 0.9); */
+  pointer-events: none;
+}
+
+.state {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.state.ok {
+  color: var(--ink);
+}
+
+.state.error {
+  color: var(--error);
+}
+
+.hint {
+  color: var(--comment);
+}
+
+.fallback {
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 24px;
+  color: #f2f4ff;
+}
+
+.fallback h1 {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 68px);
+}
+
+.fallback p {
+  margin: 14px auto 0;
+  max-width: 620px;
+  color: #a4afce;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .editor-overlay {
+    top: 12px;
+    left: 12px;
+    width: calc(100vw - 24px);
+    height: min(72vh, 72svh);
+  }
+
+  #live-editor {
+    font-size: clamp(13px, 3vw, 18px);
+  }
+}
