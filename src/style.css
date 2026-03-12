@@ -67,6 +67,10 @@ body {
   padding: 6px 8px;
 }
 
+.session-hud button {
+  cursor: pointer;
+}
+
 .session-hud label {
   display: inline-flex;
   align-items: center;
@@ -85,6 +89,20 @@ body {
 #peer-state,
 #signal-state {
   color: var(--muted);
+}
+
+.remote-notice {
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(-2px);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.remote-notice.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #peer-state.connected {

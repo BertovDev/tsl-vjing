@@ -111,33 +111,7 @@ const DEFAULT_LIVE_CODE = `export const sketch = Fn(() => {
 });
 `;
 
-const DEFAULT_REMOTE_CODE = `export const sketch = Fn(() => {
-  const uv = screenAspectUV(screenSize).toVar();
-  const t = time.mul(params.speed).mul(0.8);
-
-  const radial = length(uv).toVar();
-  const theta = atan(uv.y, uv.x).toVar();
-
-  const swirl = sin(theta.mul(9.0).add(t.mul(2.4))).mul(0.5).add(0.5);
-  const rings = sin(radial.mul(60.0).sub(t.mul(4.2))).mul(0.5).add(0.5);
-  const grid = sin(uv.x.mul(35.0).add(t.mul(1.2))).mul(
-    sin(uv.y.mul(35.0).sub(t.mul(1.1)))
-  );
-
-  const band = mix(swirl, rings, 0.55).add(grid.mul(0.25)).saturate();
-
-  const neon = cosinePalette(
-    band.add(t.mul(0.07)),
-    vec3(0.52, 0.15, 0.45),
-    vec3(0.45, 0.42, 0.35),
-    vec3(1.0, 0.7, 1.2),
-    vec3(0.2, 0.55, 0.8)
-  );
-
-  const gate = smoothstep(0.18, 0.92, band);
-  return neon.mul(gate);
-});
-`;
+const DEFAULT_REMOTE_CODE = '';
 
 const params: LiveParams = {
   speed: TSL.uniform(1.0),
@@ -253,6 +227,7 @@ const presentLocalCodeView = document.querySelector<HTMLPreElement>('#present-lo
 const presentRemoteCodeView = document.querySelector<HTMLPreElement>('#present-remote-code');
 const peerState = document.querySelector<HTMLSpanElement>('#peer-state');
 const signalState = document.querySelector<HTMLSpanElement>('#signal-state');
+const remoteNotice = document.querySelector<HTMLSpanElement>('#remote-notice');
 const openReceivedBtn = document.querySelector<HTMLButtonElement>('#open-received-btn');
 const openPresentBtn = document.querySelector<HTMLButtonElement>('#open-present-btn');
 
@@ -262,6 +237,7 @@ let renderer: THREE.WebGPURenderer | null = null;
 let mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicNodeMaterial> | null = null;
 let resizeObserver: ResizeObserver | null = null;
 let applyDebounce: number | null = null;
+let remoteNoticeTimeout: number | null = null;
 let presentHotkeyHandler: ((event: KeyboardEvent) => void) | null = null;
 
 let localCode = DEFAULT_LIVE_CODE;
@@ -305,10 +281,11 @@ const peer =
           remoteCode = code;
           syncCodeViews();
 
-          const compiled = tryCompile(remoteCode);
+          const compiled = remoteCode.trim() ? tryCompile(remoteCode) : { program: null, error: '' };
           remoteProgram = compiled.program;
           remoteCompileError = compiled.error;
 
+          notifyIncomingShader(`Remote shader updated ${new Date().toLocaleTimeString()}`);
           applyShaderGraph();
           publishState();
         }
@@ -326,6 +303,22 @@ if (!('gpu' in navigator)) {
 function clampMixAmount(value: number): number {
   if (!Number.isFinite(value)) return 0.5;
   return Math.min(1, Math.max(0, value));
+}
+
+function notifyIncomingShader(message: string): void {
+  if (appMode === 'present') return;
+  if (!remoteNotice) return;
+
+  remoteNotice.textContent = message;
+  remoteNotice.classList.add('show');
+
+  if (remoteNoticeTimeout !== null) {
+    window.clearTimeout(remoteNoticeTimeout);
+  }
+
+  remoteNoticeTimeout = window.setTimeout(() => {
+    remoteNotice?.classList.remove('show');
+  }, 2200);
 }
 
 function syncCodeViews(): void {
@@ -409,7 +402,7 @@ async function boot(): Promise<void> {
   localProgram = localCompiled.program;
   localCompileError = localCompiled.error;
 
-  const remoteCompiled = tryCompile(remoteCode);
+  const remoteCompiled = remoteCode.trim() ? tryCompile(remoteCode) : { program: null, error: '' };
   remoteProgram = remoteCompiled.program;
   remoteCompileError = remoteCompiled.error;
 
@@ -445,6 +438,7 @@ function setupTabSync(): void {
 
     if (data.type === 'state' && appMode !== 'studio') {
       const state = data.state;
+      const previousRemoteCode = remoteCode;
 
       localCode = state.localCode;
       remoteCode = state.remoteCode;
@@ -452,16 +446,30 @@ function setupTabSync(): void {
       setViewMode(appMode === 'received' ? 'remote' : appMode === 'present' ? viewMode : state.viewMode);
       syncCodeViews();
 
-      if (viewerStatus) viewerStatus.textContent = `Synced ${new Date().toLocaleTimeString()}`;
+      const remoteUpdated = previousRemoteCode !== remoteCode && remoteCode.trim().length > 0;
+
+      if (viewerStatus) {
+        if (!remoteCode.trim()) {
+          viewerStatus.textContent = 'Waiting for incoming remote shader...';
+        } else if (remoteUpdated) {
+          viewerStatus.textContent = `Remote shader updated ${new Date().toLocaleTimeString()}`;
+        } else {
+          viewerStatus.textContent = `Synced ${new Date().toLocaleTimeString()}`;
+        }
+      }
       if (presentStatus) presentStatus.textContent = `Synced ${new Date().toLocaleTimeString()}`;
 
       const lc = tryCompile(localCode);
       localProgram = lc.program;
       localCompileError = lc.error;
 
-      const rc = remoteCode ? tryCompile(remoteCode) : { program: null, error: '' };
+      const rc = remoteCode.trim() ? tryCompile(remoteCode) : { program: null, error: '' };
       remoteProgram = rc.program;
       remoteCompileError = rc.error;
+
+      if (remoteUpdated) {
+        notifyIncomingShader(`Remote shader updated ${new Date().toLocaleTimeString()}`);
+      }
 
       applyShaderGraph();
       return;
@@ -900,6 +908,7 @@ function renderTemplate(mode: AppMode): string {
 
       <span id="peer-state">Peer offline</span>
       <span id="signal-state">Signal URL: ${SIGNALING_URL}</span>
+      <span id="remote-notice" class="remote-notice" aria-live="polite"></span>
     </div>
 
     <div class="editor-overlay local">
@@ -926,6 +935,7 @@ if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     peer?.disconnect();
     tabChannel?.close();
+    if (remoteNoticeTimeout !== null) window.clearTimeout(remoteNoticeTimeout);
     if (presentHotkeyHandler) window.removeEventListener('keydown', presentHotkeyHandler);
     renderer?.setAnimationLoop(null);
     resizeObserver?.disconnect();
