@@ -18,11 +18,16 @@ export class B2BPeer {
   private selfId: string | null = null;
   private peerId: string | null = null;
   private pendingCandidates: RTCIceCandidateInit[] = [];
+  private _isCaller = false;
 
   constructor(private readonly events: B2BEvents = {}) {}
 
   get connected(): boolean {
     return this.dc?.readyState === 'open';
+  }
+
+  get isCaller(): boolean {
+    return this._isCaller;
   }
 
   connect(roomId: string, signalingUrl: string): void {
@@ -214,6 +219,7 @@ export class B2BPeer {
   }
 
   private async startCallerFlow(targetPeerId: string): Promise<void> {
+    this._isCaller = true;
     const pc = await this.ensurePeerConnection(targetPeerId, true);
 
     if (!this.dc || this.dc.readyState === 'closed') {
@@ -236,6 +242,7 @@ export class B2BPeer {
 
   private async handleSignal(from: string, data: SignalEnvelope): Promise<void> {
     const caller = data.type !== 'offer';
+    this._isCaller = caller;
     const pc = await this.ensurePeerConnection(from, caller);
 
     if (data.type === 'offer' && data.sdp) {
