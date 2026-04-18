@@ -1,0 +1,356 @@
+{
+  "edges": [
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleSignal",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "ensurePeerConnection"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "compileProgram",
+      "to_file": "src/main.ts",
+      "to_func": "normalizeSketchSource"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "applyShaderGraph"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindPresentEvents",
+      "to_file": "src/main.ts",
+      "to_func": "publishControl"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.connect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "cleanupPeerConnection"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "setViewMode"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setMixAmount",
+      "to_file": "src/main.ts",
+      "to_func": "syncMixUI"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "syncCodeViews"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindStudioEvents",
+      "to_file": "src/main.ts",
+      "to_func": "setMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "syncMixUI",
+      "to_file": "src/main.ts",
+      "to_func": "clampMixAmount"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.disconnect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "sendWs"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.ensurePeerConnection",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "sendWs"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "bindStudioEvents"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "publishState"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindStudioEvents",
+      "to_file": "src/main.ts",
+      "to_func": "applyShaderGraph"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "tryCompile"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyControlPayload",
+      "to_file": "src/main.ts",
+      "to_func": "setViewMode"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.startCallerFlow",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "ensurePeerConnection"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "notifyIncomingShader"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.startCallerFlow",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "attachDataChannel"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleSignal",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "flushPendingCandidates"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.connect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "sendWs"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleWsMessage",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "startCallerFlow"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.attachDataChannel",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "handleDataMessage"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "bindPresentEvents"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindPresentEvents",
+      "to_file": "src/main.ts",
+      "to_func": "clampMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyShaderGraph",
+      "to_file": "src/main.ts",
+      "to_func": "evaluateProgram"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleSignal",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "sendWs"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setMixAmount",
+      "to_file": "src/main.ts",
+      "to_func": "clampMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "setMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyControlPayload",
+      "to_file": "src/main.ts",
+      "to_func": "publishState"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "syncMixUI"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.connect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "handleWsMessage"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setViewMode",
+      "to_file": "src/main.ts",
+      "to_func": "syncViewModeUI"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "tryCompile",
+      "to_file": "src/main.ts",
+      "to_func": "compileProgram"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "applyShaderGraph"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "tryCompile"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "publishState"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.ensurePeerConnection",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "attachDataChannel"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyControlPayload",
+      "to_file": "src/main.ts",
+      "to_func": "clampMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "syncCodeViews"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyControlPayload",
+      "to_file": "src/main.ts",
+      "to_func": "setMixAmount"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "compileProgram",
+      "to_file": "src/main.ts",
+      "to_func": "factory"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindStudioEvents",
+      "to_file": "src/main.ts",
+      "to_func": "setViewMode"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.connect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "disconnect"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/webgpu/create_webgpu_stage.ts",
+      "to_func": "createWebGPUStage"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleWsMessage",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "handleSignal"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "syncViewModeUI"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.handleWsMessage",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "cleanupPeerConnection"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyControlPayload",
+      "to_file": "src/main.ts",
+      "to_func": "applyShaderGraph"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindPresentEvents",
+      "to_file": "src/main.ts",
+      "to_func": "applyControlPayload"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.startCallerFlow",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "sendWs"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "boot",
+      "to_file": "src/main.ts",
+      "to_func": "resizeStage"
+    },
+    {
+      "from_file": "src/network/webrtc_b2b.ts",
+      "from_func": "B2BPeer.disconnect",
+      "to_file": "src/network/webrtc_b2b.ts",
+      "to_func": "cleanupPeerConnection"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "setupTabSync",
+      "to_file": "src/main.ts",
+      "to_func": "applyControlPayload"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindStudioEvents",
+      "to_file": "src/main.ts",
+      "to_func": "tryCompile"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "bindStudioEvents",
+      "to_file": "src/main.ts",
+      "to_func": "publishState"
+    },
+    {
+      "from_file": "src/main.ts",
+      "from_func": "applyShaderGraph",
+      "to_file": "src/main.ts",
+      "to_func": "updateStatus"
+    }
+  ],
+  "languages": [
+    "typescript"
+  ],
+  "timestamp": 1773379121.674965
+}
